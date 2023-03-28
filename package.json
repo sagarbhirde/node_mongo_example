@@ -1,0 +1,34 @@
+{
+  "name": "nodemongoapi",
+  "version": "1.0.0",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/server.js"
+  },
+  "author": "Sagar Bhirde",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sagarbhirde/node_mongo_example.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sagarbhirde/node_mongo_example/issues"
+  },
+  "homepage": "https://github.com/sagarbhirde/node_mongo_example#readme",
+  "description": "",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-validator": "^6.15.0",
+    "mongodb": "^5.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  },
+  "engines": {
+    "node": "14.x",
+    "npm": "6.x"
+  }
+}
