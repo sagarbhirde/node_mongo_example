@@ -6,15 +6,15 @@ app.use(express.json())
 
 import accounts from './routes/accounts.js'
 
-app.use('/accounts',accounts)
+app.use('/accounts', accounts)
 
 app.get('/', (req, res) => {
-    res.status(200).json({
-        message: 'API 100% funcional!👏',
-        version: '1.0.1'
-    })
+  res.status(200).json({
+    message: 'API 100% funcional!👏',
+    version: '1.0.1'
   })
+})
 
-app.listen(port, function(){
-console.log('Server Started')
+app.listen(port, function () {
+  console.log('Server Started')
 })

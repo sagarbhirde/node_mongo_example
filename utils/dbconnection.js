@@ -1,10 +1,10 @@
 import mongodb from 'mongodb'
-const {MongoClient, ObjectId } = mongodb
+const { MongoClient, ObjectId } = mongodb
 
 import { config } from 'dotenv'
 config()
 
-const { MONGODB_URI, MONGODB_DB} = process.env
+const { MONGODB_URI, MONGODB_DB } = process.env
 
 let cached = global.mongo
 
