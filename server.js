@@ -4,7 +4,7 @@ const port = 3243
 
 app.use(express.json())
 
-import accounts from './routes/accounts.js'
+import accounts from './routes/Accounts.js'
 
 app.use('/accounts', accounts)
 

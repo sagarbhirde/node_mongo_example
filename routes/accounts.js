@@ -1,12 +1,9 @@
 import express from 'express'
-import { connectToDatabase } from '../utils/dbconnection.js'
 import { check, validationResult } from 'express-validator'
-import accountsDao from '../generic/accountsDao.js'
+import accountsDao from '../generic/AccountsDao.js'
 var accounts = new accountsDao();
-
 const router = express.Router()
 const collection = 'accounts'
-const { db, ObjectId } = await connectToDatabase()
 
 // validations
 
@@ -20,17 +17,21 @@ const validateInputs = [
 // GET List of documents
 router.get("/", async (req, res) => {
     try {
-        var result = await accounts.findData();
-        res.status(200).json(result)  //return documents
+       const accountsData = await accounts.findData(collection);
+        res.status(200).json(accountsData)  //return documents
     } catch (err) {
         res.status(500).json({ "error": err.message })
     }
 })
 
+function parseData(result,accountsSchema){
+    
+}
+
 //GET document based on id
 router.get("/:id", async (req, res) => {
     try {
-        var result = await accounts.findDataById(req.params.id);
+        var result = await accounts.findDataById(collection,req.params.id);
         return res.status(200).json(result)
     } catch (err) {
         res.status(500).json({ "error": err.message })
@@ -39,7 +40,7 @@ router.get("/:id", async (req, res) => {
 
 
 //POST insert document
-router.post('/', validateInputs, async (req, res) => {
+router.post('/',  async (req, res) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
         return res.status(400).json(({
@@ -47,7 +48,7 @@ router.post('/', validateInputs, async (req, res) => {
         }))
     } else {
         try {
-            var result = await accounts.insertData(req.body);
+            var result = await accounts.insertData(collection,req.body);
             res.status(201).send(result)
         } catch (error) {
             res.status(400).json(error)
@@ -64,7 +65,7 @@ router.put('/', validateInputs, async (req, res) => {
         }))
     } else {
         try {
-            var result = await accounts.updateData(req.body);
+            var result = await accounts.updateData(collection,req.body);
             res.status(202).send(result)
         } catch (error) {
             res.status(400).json(error)
@@ -75,7 +76,7 @@ router.put('/', validateInputs, async (req, res) => {
 //DELETE delte document
 router.delete("/:id", async (req, res) => {
     try {
-        var result = await accounts.deleteData(req.params.id);
+        var result = await accounts.deleteData(collection,req.params.id);
         res.status(202).send(result)
     } catch (error) {
         res.status(400).json(err)

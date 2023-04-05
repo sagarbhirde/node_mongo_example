@@ -1,47 +1,47 @@
 import res from 'express/lib/response.js';
-import { connectToDatabase } from '../utils/dbconnection.js'
-
-const collection = 'accounts'
+import accountsSchema from '../models/AccountsSchema.js';
+import { connectToDatabase } from '../utils/Dbconnection.js'
+import Base from './Base.js';
 const { db, ObjectId } = await connectToDatabase()
 
-class accountsDao {
+class AccountsDao extends Base {
 
   constructor() {
-
+    super();
   }
 
-  async findData() {
-    var result = await db.collection(collection).find({}).toArray();
-    return result;
+  getParsedAccountsData(accounts) {
+    return accounts.map(account => {
+      const transformedAccounts = {};
+      Object.keys(accountsSchema).forEach(key => {
+        transformedAccounts[key] = account[key];
+      });
+      return transformedAccounts;
+    });
   }
 
-  async findDataById(id) {
-    var result = await db.collection(collection).find({ "_id": { $eq: new ObjectId(id) } }).toArray();
-    return result;
+  async findData(collection) {
+    var accounts = await super.findData(collection);
+    return this.getParsedAccountsData(accounts);
   }
 
-  async insertData(requestPayload) {
-    var result = await db.collection(collection).insertOne(requestPayload)
-    return result
+  async findDataById(collection,id) {
+    var accounts = await super.findDataById(collection, id);
+    return this.getParsedAccountsData(accounts);
   }
 
-  async updateData(requestPayload) {
+  async updateData(collection, requestPayload) {
     const accountsInput = requestPayload
     var result = await db.collection(collection).updateOne({ "_id": { $eq: new ObjectId(accountsInput._id) } }, {
       $set:
       {
         account_id: accountsInput.account_id,
         limit: accountsInput.limit,
-
       }
     }, { returnNewDocument: true })
     return result;
   }
-
-  async deleteData(id) {
-    var result =   await db.collection(collection).deleteOne({ "_id": { $eq: new ObjectId(id) } })
-    return result;
-  }
 }
 
-export default accountsDao
+
+export default AccountsDao

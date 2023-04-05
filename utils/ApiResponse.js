@@ -1,0 +1,9 @@
+class ApiResponse{
+
+constructor(status){
+
+}
+
+
+
+}
