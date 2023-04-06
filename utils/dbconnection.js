@@ -34,7 +34,7 @@ export async function connectToDatabase() {
         `Issue while connecting DB ${error}`
       )
     }).finally(() => {
-      console.log(' Connected to MongoDB')
+      console.log('Connected to MongoDB')
     })
   }
   cached.conn = await cached.promise
